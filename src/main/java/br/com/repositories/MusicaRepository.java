@@ -68,7 +68,7 @@ public class MusicaRepository implements IMusicaRepository {
 	}
 
 	@Override
-	public Optional<List<IMusica>> getMusicasMaisTocadas( String nomeArtista, int qtd ) {
+	public Optional<List<IMusica>> getMusicasMaisTocadas( String nomeArtista, int qtd ) throws Exception {
 		 List<IMusica> musicas = this.musicas
 				.stream()
 				.filter( item -> item.getArtista().equalsIgnoreCase( nomeArtista ) )
@@ -81,7 +81,7 @@ public class MusicaRepository implements IMusicaRepository {
 	}
 
 	@Override
-	public Optional<List<IMusica>> getMusicas( String nomeArtista ) {
+	public Optional<List<IMusica>> getMusicas( String nomeArtista ) throws Exception {
 		List<IMusica> musicas =this.musicas
 						.stream()
 						.filter( item -> item.getArtista().equalsIgnoreCase( nomeArtista ) )
@@ -92,7 +92,7 @@ public class MusicaRepository implements IMusicaRepository {
 	}
 
     @Override
-    public void atualizarEstatisticasReproducao(IMusica musica) {
+    public void atualizarEstatisticasReproducao(IMusica musica) throws Exception{
         var musicaRecuperada = this.musicas
                 .stream()
                 .filter(item -> item.getTitulo().equalsIgnoreCase(musica.getTitulo()))

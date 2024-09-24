@@ -66,7 +66,7 @@ public class ArtistaRepository implements IArtistaRepository {
     }
 
     @Override
-    public Optional<String> getBiografia(String artista) {
+    public Optional<String> getBiografia(String artista) throws Exception{
         return this.artistas
                 .stream()
                 .filter(item -> item.getNome().equalsIgnoreCase(artista))
