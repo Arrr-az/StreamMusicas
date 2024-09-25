@@ -9,7 +9,11 @@ public interface IPlaylist {
     void removerMusica(IMusica musica);
     boolean isPublica();
     void setPublica(boolean publica);
+    boolean isCompartilhavel();
+    void setCompartilhavel(boolean compartilhavel);
     void adicionarColaborador(IUsuario usuario);
     List<IUsuario> getColaboradores();
+    void adicionarUsuario(IUsuario usuario);
+    List<IUsuario> getUsuarios();
     public IUsuario getCriador();
 }

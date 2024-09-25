@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class UsuarioService implements IUsuarioService {
     
-    private List<IUsuario> usuariosCadastrados;
+    private static List<IUsuario> usuariosCadastrados;
     
     public UsuarioService() {
         this.usuariosCadastrados = new ArrayList<IUsuario>();

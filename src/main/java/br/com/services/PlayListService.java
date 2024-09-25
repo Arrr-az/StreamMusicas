@@ -12,16 +12,19 @@ import br.com.interfaces.services.IReproducaoService;
 import br.com.interfaces.services.IUsuarioService;
 import br.com.model.Playlist;
 import java.util.ArrayList;
+import java.util.concurrent.TimeoutException;
 
 public class PlayListService implements IPlayListService {
     
     private IRecomendacaoService recomendacaoService;
     private IUsuarioService usuarioService;
     private List<IUsuario> autorizadosParaCriarPlaylist;
-    private static final Integer MAX_COLABORADORES = 15;
+    private static final Integer MAX_COLABORADORES = 5;
     
-    public PlayListService() {
-        autorizadosParaCriarPlaylist = new ArrayList<IUsuario>();
+    public PlayListService(IRecomendacaoService recomendacaoService) {
+        autorizadosParaCriarPlaylist = new ArrayList<>();
+        usuarioService = new UsuarioService();
+        this.recomendacaoService = recomendacaoService;
     }
 
     @Override
@@ -47,10 +50,11 @@ public class PlayListService implements IPlayListService {
         if( !usuarioService.possuiCadastro( usuario ) ) {
             return -1;
         }
-        else if( !playlist.isPublica() ) {
+        else if( !playlist.isPublica() && !playlist.isCompartilhavel() ) {
             return -2;
         }
         
+        playlist.adicionarUsuario(usuario);
         return 0;
     }
 
@@ -71,7 +75,13 @@ public class PlayListService implements IPlayListService {
 
     @Override
     public List<IMusica> recomendarMusicasParaPlayList( IPlaylist playlist ) {
-        return recomendacaoService.recomendarMusicasParaPlayList( playlist );
+        List<IMusica> resultado = recomendacaoService.recomendarMusicasParaPlayList( playlist );
+        
+        if(resultado == null){
+            return new ArrayList<>();
+        }
+        
+        return resultado;
     }
 
     @Override
