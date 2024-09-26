@@ -7,10 +7,13 @@ import br.com.interfaces.model.IMusica;
 import br.com.interfaces.model.IPlaylist;
 import br.com.interfaces.model.IUsuario;
 import br.com.interfaces.repository.IUsuarioRepository;
+import br.com.interfaces.services.IArtistaService;
 import br.com.interfaces.services.IPlayListService;
 import br.com.interfaces.services.IRecomendacaoService;
 import br.com.interfaces.services.IReproducaoService;
 import br.com.model.Playlist;
+import br.com.repositories.ArtistaRepository;
+import br.com.repositories.MusicaRepository;
 import br.com.repositories.UsuarioRepository;
 import java.util.ArrayList;
 
@@ -104,7 +107,9 @@ public class PlayListService implements IPlayListService {
             return -2;
         }
         
-        reproducaoService.reproduzirPlayList(playlist, usuario);
+        IArtistaService aService = new ArtistaService(ArtistaRepository.getArtistaRepository(), MusicaRepository.getMusicaRepository());
+        
+        reproducaoService.reproduzirPlayList(playlist, usuario, aService);
         return 0;
     }
 }
