@@ -1,7 +1,6 @@
 package br.com.repositories;
 
 import br.com.interfaces.model.IArtista;
-import br.com.interfaces.model.IMusica;
 import br.com.interfaces.repository.IArtistaRepository;
 import br.com.model.Artista;
 
