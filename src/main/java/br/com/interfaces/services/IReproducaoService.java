@@ -1,6 +1,5 @@
 package br.com.interfaces.services;
 
-import br.com.interfaces.model.IArtista;
 import br.com.interfaces.model.IMusica;
 import br.com.interfaces.model.IPlaylist;
 import br.com.interfaces.model.IUsuario;
