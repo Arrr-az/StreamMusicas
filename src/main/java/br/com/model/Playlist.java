@@ -11,12 +11,19 @@ public class Playlist implements IPlaylist {
     private String nome;
     private List<IMusica> musicas;
     private boolean isPublica;
+    private boolean isCompartilhada;
     private List<IUsuario> colaboradores;
+    private List<IUsuario> usuarios;
+    private IUsuario criador;
 
-    public Playlist(String nome) {
+    public Playlist(String nome, IUsuario criador) {
         this.nome = nome;
+        this.criador = criador;
         this.musicas = new ArrayList<IMusica>();
         this.colaboradores = new ArrayList<IUsuario>();
+        this.usuarios = new ArrayList<IUsuario>();
+        this.isCompartilhada = true;
+        this.isPublica = true;
     }
 
     @Override
@@ -48,6 +55,16 @@ public class Playlist implements IPlaylist {
     public void setPublica(boolean bln) {
         isPublica = bln;
     }
+    
+    @Override
+    public boolean isCompartilhavel() {
+        return isCompartilhada;
+    }
+
+    @Override
+    public void setCompartilhavel(boolean bln) {
+        isCompartilhada = bln;
+    }
 
     @Override
     public void adicionarColaborador(IUsuario iu) {
@@ -57,5 +74,20 @@ public class Playlist implements IPlaylist {
     @Override
     public List<IUsuario> getColaboradores() {
         return colaboradores;
+    }
+    
+    @Override
+    public IUsuario getCriador() {
+        return criador;
+    }
+
+    @Override
+    public void adicionarUsuario(IUsuario usuario) {
+        this.usuarios.add(usuario);
+    }
+
+    @Override
+    public List<IUsuario> getUsuarios() {
+        return this.usuarios;
     }
 }
