@@ -24,6 +24,7 @@ public class Usuario implements IUsuario {
         return this.nome;
     }
 
+
     @Override
     public String getEmail() {
         return this.email;
@@ -38,7 +39,18 @@ public class Usuario implements IUsuario {
         return permissaoReproduzirMusicas;
     }
 
-    public Boolean getPermissaoCriarPlaylists() {
-        return permissaoCriarPlaylists;
-    }
+	@Override
+	public void setEmail( String email ) {
+		this.email = email;
+	}
+        
+  @Override
+  public Boolean getPermissaoReproduzirMusicas() {
+      return permissaoReproduzirMusicas;
+  }
+
+  @Override
+  public Boolean getPermissaoCriarPlaylists() {
+      return permissaoCriarPlaylists;
+  }
 }
