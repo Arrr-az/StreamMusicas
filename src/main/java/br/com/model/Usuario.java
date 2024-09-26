@@ -6,11 +6,18 @@ public class Usuario implements IUsuario {
 
 	private final String nome;
 	private String email;
+        private Boolean permissaoReproduzirMusicas;
+        private Boolean permissaoCriarPlaylists;
 
-	public Usuario( String nome, String email ) {
-		this.nome = nome;
-		this.email = email;
-	}
+        public Usuario( String nome,
+                String email,
+                Boolean permissaoReproduzirMusicas,
+                Boolean permissaoCriarPlaylists ) {
+            this.nome = nome;
+            this.email = email;
+            this.permissaoReproduzirMusicas = permissaoReproduzirMusicas;
+            this.permissaoCriarPlaylists = permissaoCriarPlaylists;
+        }
 
 	@Override
 	public String getNome() {
@@ -26,4 +33,14 @@ public class Usuario implements IUsuario {
 	public void setEmail( String email ) {
 		this.email = email;
 	}
+        
+        @Override
+        public Boolean getPermissaoReproduzirMusicas() {
+            return permissaoReproduzirMusicas;
+        }
+
+        @Override
+        public Boolean getPermissaoCriarPlaylists() {
+            return permissaoCriarPlaylists;
+        }
 }

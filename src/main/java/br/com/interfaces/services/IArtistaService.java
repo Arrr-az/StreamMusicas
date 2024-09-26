@@ -9,5 +9,5 @@ public interface IArtistaService{
     Optional<List<IMusica>> getMusicasMaisTocadas(String artista);
     Optional<List<IMusica>> getMusicas(String artista);
     Optional<String> getBiografia(String artista);
-    void atualizarEstatisticasReproducao(IMusica musica);
+    void atualizarEstatisticasReproducao(IMusica musica) throws Exception;
 }

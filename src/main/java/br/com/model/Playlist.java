@@ -12,9 +12,11 @@ public class Playlist implements IPlaylist {
     private List<IMusica> musicas;
     private boolean isPublica;
     private List<IUsuario> colaboradores;
+    private IUsuario criador;
 
-    public Playlist(String nome) {
+    public Playlist(String nome, IUsuario criador) {
         this.nome = nome;
+        this.criador = criador;
         this.musicas = new ArrayList<IMusica>();
         this.colaboradores = new ArrayList<IUsuario>();
     }
@@ -57,5 +59,10 @@ public class Playlist implements IPlaylist {
     @Override
     public List<IUsuario> getColaboradores() {
         return colaboradores;
+    }
+    
+    @Override
+    public IUsuario getCriador() {
+        return criador;
     }
 }
