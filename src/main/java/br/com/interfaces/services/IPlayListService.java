@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface IPlayListService {
     Optional<IPlaylist> criarPlayList(String nome, IUsuario criador);
-    void compartilharPlayList(IPlaylist playlist, IUsuario usuario);
-    void convidarColaborador(IPlaylist playlist, IUsuario usuario);
+    Integer compartilharPlayList(IPlaylist playlist, IUsuario usuario);
+    Integer convidarColaborador(IPlaylist playlist, IUsuario usuario);
     List<IMusica> recomendarMusicasParaPlayList(IPlaylist playlist);
-    void iniciarReproducaoPlayList(IPlaylist playlist, IUsuario usuario,
+    Integer iniciarReproducaoPlayList(IPlaylist playlist, IUsuario usuario,
                                    IReproducaoService reproducaoService);
 }
