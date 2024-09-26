@@ -216,12 +216,12 @@ public class MockTestes {
     @Test
     // Inicia a reprodução da playlist automaticamente.
     public void iniciarReproducaoPlayList(){
-        doNothing().when(mockReproducao).reproduzirPlayList(pl.get(), usuario, any());
+        doNothing().when(mockReproducao).reproduzirPlayList(eq(pl.get()), eq(usuario), any());
         
         var retorno = playListService.iniciarReproducaoPlayList(pl.get(), usuario, mockReproducao);
         
         assertEquals(0, retorno);
-        verify(mockReproducao, times(1)).reproduzirPlayList(pl.get(), usuario, any());
+        verify(mockReproducao, times(1)).reproduzirPlayList(eq(pl.get()), eq(usuario), any());
     }
     
     @Test
@@ -231,12 +231,12 @@ public class MockTestes {
         
         var playListVazia = playListService.criarPlayList("Vazia", us);
         
-        doNothing().when(mockReproducao).reproduzirPlayList(playListVazia.get(), us, any());
+        doNothing().when(mockReproducao).reproduzirPlayList(eq(playListVazia.get()), eq(us), any());
         
         var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), us, mockReproducao);
         
         assertEquals(-1, retorno);
-        verify(mockReproducao, never()).reproduzirPlayList(playListVazia.get(), us, any());
+        verify(mockReproducao, never()).reproduzirPlayList(eq(playListVazia.get()), eq(us), any());
     }
     
     @Test
@@ -244,11 +244,11 @@ public class MockTestes {
     public void iniciarReproducaoPlayListFalha2(){
         var playListVazia = playListService.criarPlayList("Vazia", usuario);
         
-        doNothing().when(mockReproducao).reproduzirPlayList(playListVazia.get(), usuario, any());
+        doNothing().when(mockReproducao).reproduzirPlayList(eq(playListVazia.get()), eq(usuario), any());
         
         var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), usuario, mockReproducao);
         
         assertEquals(-2, retorno);
-        verify(mockReproducao, never()).reproduzirPlayList(playListVazia.get(), usuario, any());
+        verify(mockReproducao, never()).reproduzirPlayList(eq(playListVazia.get()), eq(usuario), any());
     }
 }

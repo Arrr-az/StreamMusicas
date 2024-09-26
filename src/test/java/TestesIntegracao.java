@@ -95,31 +95,23 @@ public class TestesIntegracao {
         assertEquals(0, retorno);
     }
     
-    /*
     @Test
     public void iniciarReproducaoPlayListFalha1(){
         IUsuario us = new Usuario("Meu nome", "email@email", Boolean.FALSE, Boolean.TRUE);
         
         var playListVazia = playListService.criarPlayList("Vazia", us);
         
-        doNothing().when(mockReproducao).reproduzirPlayList(playListVazia.get(), us);
-        
-        var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), us, mockReproducao);
+        var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), us, reproducaoService);
         
         assertEquals(-1, retorno);
-        verify(mockReproducao, never()).reproduzirPlayList(playListVazia.get(), us);
     }
     
     @Test
     public void iniciarReproducaoPlayListFalha2(){
         var playListVazia = playListService.criarPlayList("Vazia", usuario);
         
-        doNothing().when(mockReproducao).reproduzirPlayList(playListVazia.get(), usuario);
-        
-        var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), usuario, mockReproducao);
+        var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), usuario, reproducaoService);
         
         assertEquals(-2, retorno);
-        verify(mockReproducao, never()).reproduzirPlayList(playListVazia.get(), usuario);
     }
-*/
 }
