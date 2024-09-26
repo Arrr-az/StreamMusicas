@@ -13,7 +13,5 @@ public interface IPlaylist {
     void setCompartilhavel(boolean compartilhavel);
     void adicionarColaborador(IUsuario usuario);
     List<IUsuario> getColaboradores();
-    void adicionarUsuario(IUsuario usuario);
-    List<IUsuario> getUsuarios();
     public IUsuario getCriador();
 }
