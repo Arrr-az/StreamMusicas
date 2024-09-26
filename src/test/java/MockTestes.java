@@ -2,11 +2,14 @@
 import br.com.interfaces.model.IMusica;
 import br.com.interfaces.model.IPlaylist;
 import br.com.interfaces.model.IUsuario;
+import br.com.interfaces.repository.IUsuarioRepository;
 import br.com.interfaces.services.IRecomendacaoService;
 import br.com.interfaces.services.IReproducaoService;
 import br.com.model.Musica;
 import br.com.model.Playlist;
 import br.com.model.Usuario;
+import br.com.repositories.MusicaRepository;
+import br.com.repositories.UsuarioRepository;
 import br.com.services.PlayListService;
 import br.com.services.UsuarioService;
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ import org.mockito.MockitoAnnotations;
 
 public class MockTestes {
     private PlayListService playListService;
-    private UsuarioService usuarioService;
+    private IUsuarioRepository usuarioRepository;
     private IUsuario usuario;
     private Optional<IPlaylist> pl;
     
@@ -38,14 +41,21 @@ public class MockTestes {
     private IRecomendacaoService mockRecomendacao;
     
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws Exception{
         MockitoAnnotations.openMocks(this);
         
         playListService = new PlayListService(mockRecomendacao);
-        usuarioService = new UsuarioService();
         usuario = new Usuario("Jao", "jao@email", Boolean.TRUE, Boolean.TRUE);
-        usuarioService.adicionarUsuario(usuario);
+        
+        usuarioRepository = UsuarioRepository.getUsuarioRepository();
+        usuarioRepository.inserir(usuario);
+        
+        // Definindo uma playlist valida
         pl = playListService.criarPlayList("NaoSei", usuario);
+        var musicas = MusicaRepository.getMusicaRepository().getMusicas("BlackPink");
+        for(IMusica music : musicas.get() ){
+            pl.get().adicionarMusica(music);
+        }
     }
     
     @Test
@@ -78,11 +88,9 @@ public class MockTestes {
     public void compartilharPlayListTeste(){
         Usuario user = new Usuario("Eu", "eu@email", Boolean.TRUE, Boolean.FALSE);
         
-        usuarioService.adicionarUsuario(user);
+        usuarioRepository.inserir(user);
         
         var retorno = playListService.compartilharPlayList(pl.get(), user);
-        
-        System.out.println(pl.get().getUsuarios());
         assertEquals(Boolean.TRUE, pl.get().getUsuarios().contains(user));
         assertEquals(0, retorno);
     }
@@ -90,7 +98,7 @@ public class MockTestes {
     @Test
     // Retorna um valor indicando falha se o usuário não existir no sistema.
     public void compartilharPlayListTesteFalha1(){
-        Usuario user = new Usuario("Eu", "eu@email", Boolean.TRUE, Boolean.FALSE);
+        Usuario user = new Usuario("TesteFalha1", "eu@email", Boolean.TRUE, Boolean.FALSE);
         
         var retorno = playListService.compartilharPlayList(pl.get(), user);
         
@@ -102,7 +110,7 @@ public class MockTestes {
     // Retorna um valor indicando falha se a playlist for privada e o compartilhamento não for permitido
     public void compartilharPlayListTesteFalha2(){
         Usuario user = new Usuario("Eu", "eu@email", Boolean.TRUE, Boolean.FALSE);
-        usuarioService.adicionarUsuario(user);
+        usuarioRepository.inserir(user);
         
         pl.get().setCompartilhavel(false);
         pl.get().setPublica(false);
@@ -209,4 +217,40 @@ public class MockTestes {
         assertTrue(resultado.isEmpty());
     }
 
+    @Test
+    // Inicia a reprodução da playlist automaticamente.
+    public void iniciarReproducaoPlayList(){
+        doNothing().when(mockReproducao).reproduzirPlayList(pl.get(), usuario);
+        
+        var retorno = playListService.iniciarReproducaoPlayList(pl.get(), usuario, mockReproducao);
+        
+        assertEquals(0, retorno);
+        verify(mockReproducao, times(1)).reproduzirPlayList(pl.get(), usuario);
+    }
+    
+    @Test
+    public void iniciarReproducaoPlayListFalha1(){
+        IUsuario us = new Usuario("Meu nome", "email@email", Boolean.FALSE, Boolean.TRUE);
+        
+        var playListVazia = playListService.criarPlayList("Vazia", us);
+        
+        doNothing().when(mockReproducao).reproduzirPlayList(playListVazia.get(), us);
+        
+        var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), us, mockReproducao);
+        
+        assertEquals(-1, retorno);
+        verify(mockReproducao, never()).reproduzirPlayList(playListVazia.get(), us);
+    }
+    
+    @Test
+    public void iniciarReproducaoPlayListFalha2(){
+        var playListVazia = playListService.criarPlayList("Vazia", usuario);
+        
+        doNothing().when(mockReproducao).reproduzirPlayList(playListVazia.get(), usuario);
+        
+        var retorno = playListService.iniciarReproducaoPlayList(playListVazia.get(), usuario, mockReproducao);
+        
+        assertEquals(-2, retorno);
+        verify(mockReproducao, never()).reproduzirPlayList(playListVazia.get(), usuario);
+    }
 }
