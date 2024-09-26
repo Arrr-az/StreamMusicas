@@ -77,13 +77,21 @@ public class PlayListService implements IPlayListService {
 
     @Override
     public List<IMusica> recomendarMusicasParaPlayList( IPlaylist playlist ) {
-        List<IMusica> resultado = recomendacaoService.recomendarMusicasParaPlayList( playlist );
         
-        if(resultado == null){
-            return new ArrayList<>();
+        List<IMusica> resultado = new ArrayList<>();
+        
+        try{
+            resultado = recomendacaoService.recomendarMusicasParaPlayList( playlist );
+
+            if(resultado == null || resultado.isEmpty()){
+                return new ArrayList<>();
+            }
+
+            return resultado;
         }
-        
-        return resultado;
+        catch (Exception e){
+            return resultado;
+        }
     }
 
     @Override

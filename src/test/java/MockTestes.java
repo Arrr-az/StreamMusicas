@@ -2,20 +2,17 @@
 import br.com.interfaces.model.IMusica;
 import br.com.interfaces.model.IPlaylist;
 import br.com.interfaces.model.IUsuario;
+import br.com.interfaces.repository.IMusicaRepository;
 import br.com.interfaces.repository.IUsuarioRepository;
 import br.com.interfaces.services.IRecomendacaoService;
 import br.com.interfaces.services.IReproducaoService;
-import br.com.model.Musica;
-import br.com.model.Playlist;
 import br.com.model.Usuario;
 import br.com.repositories.MusicaRepository;
 import br.com.repositories.UsuarioRepository;
 import br.com.services.PlayListService;
-import br.com.services.UsuarioService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeoutException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -175,10 +172,10 @@ public class MockTestes {
     @Test
     // Retorna uma lista de músicas recomendadas para adicionar à playlist.
     public void recomendarMusicasParaPlayListTeste(){
+        IMusicaRepository musicaRepository = MusicaRepository.getMusicaRepository();
         List<IMusica> musicasRecomendadas = new ArrayList<>();
-        musicasRecomendadas.add(new Musica( "How You Like That", "BlackPink", "KPOP", 3.0 ));
-        musicasRecomendadas.add(new Musica( "What is Love", "Twice", "KPOP", 3.3 ));
-        musicasRecomendadas.add(new Musica( "Na Sola da Bota", "Rionegro & Solimões", "Sertanejo", 2.8 ));
+        musicasRecomendadas.add(musicaRepository.findByTitulo("What is Love").get());
+        musicasRecomendadas.add(musicaRepository.findByTitulo("Gangnam Style").get());
 
         when(mockRecomendacao.recomendarMusicasParaPlayList(pl.get())).thenReturn(musicasRecomendadas);
         
@@ -186,6 +183,8 @@ public class MockTestes {
         
         verify(mockRecomendacao, times(1)).recomendarMusicasParaPlayList(pl.get());
         assertEquals(Boolean.FALSE , resultado.isEmpty());
+        assertTrue(resultado.contains(musicaRepository.findByTitulo("What is Love").get()));
+        assertTrue(resultado.contains(musicaRepository.findByTitulo("Gangnam Style").get()));
     }
     
     @Test
@@ -204,14 +203,11 @@ public class MockTestes {
     @Test
     // Retorna uma lista vazia se o RecomendacaoService não estiver disponível.
     public void recomendarMusicasParaPlayListTesteFalha2() {
-        // Simulando que o RecomendacaoService está indisponível retornando null
-        when(mockRecomendacao.recomendarMusicasParaPlayList(pl.get())).thenReturn(null);
-
+        // Simulando que o RecomendacaoService está indisponivel
+        PlayListService service = new PlayListService(null);
+        
         // Chamando o método que vai utilizar o serviço de recomendação
-        List<IMusica> resultado = playListService.recomendarMusicasParaPlayList(pl.get());
-
-        // Verificando se o método foi chamado
-        verify(mockRecomendacao, times(1)).recomendarMusicasParaPlayList(pl.get());
+        List<IMusica> resultado = service.recomendarMusicasParaPlayList(pl.get());
 
         // Verificando se o resultado é uma lista vazia, já que o serviço está indisponível (retornou null)
         assertTrue(resultado.isEmpty());
