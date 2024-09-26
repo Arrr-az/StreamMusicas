@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IReproducaoService {
     void reproduzirMusica(IMusica musica, IUsuario usuario);
-    void reproduzirPlayList(IPlaylist playlist, IUsuario usuario, IArtistaService artistaService);
+    void reproduzirPlayList(IPlaylist playlist, IUsuario usuario);
     void pausarReproducao(IUsuario usuario);
     void retomarReproducao(IUsuario usuario);
     void pararReproducao(IUsuario usuario);
