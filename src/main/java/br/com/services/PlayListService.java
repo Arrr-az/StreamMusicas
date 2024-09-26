@@ -57,7 +57,7 @@ public class PlayListService implements IPlayListService {
             return -2;
         }
         
-        playlist.adicionarColaborador(usuario);
+        playlist.adicionarUsuario(usuario);
         return 0;
     }
 

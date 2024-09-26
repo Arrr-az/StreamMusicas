@@ -88,7 +88,7 @@ public class MockTestes {
         usuarioRepository.inserir(user);
         
         var retorno = playListService.compartilharPlayList(pl.get(), user);
-        assertEquals(Boolean.TRUE, pl.get().getColaboradores().contains(user));
+        assertEquals(Boolean.TRUE, pl.get().getUsuarios().contains(user));
         assertEquals(0, retorno);
     }
     
@@ -99,7 +99,7 @@ public class MockTestes {
         
         var retorno = playListService.compartilharPlayList(pl.get(), user);
         
-        assertEquals(Boolean.FALSE, pl.get().getColaboradores().contains(user));
+        assertEquals(Boolean.FALSE, pl.get().getUsuarios().contains(user));
         assertEquals(-1, retorno);
     }
     
@@ -114,7 +114,7 @@ public class MockTestes {
         
         var retorno = playListService.compartilharPlayList(pl.get(), user);
         
-        assertEquals(Boolean.FALSE, pl.get().getColaboradores().contains(user));
+        assertEquals(Boolean.FALSE, pl.get().getUsuarios().contains(user));
         assertEquals(-2, retorno);
     }
     
