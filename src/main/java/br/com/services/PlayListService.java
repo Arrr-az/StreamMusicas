@@ -10,21 +10,17 @@ import br.com.interfaces.repository.IUsuarioRepository;
 import br.com.interfaces.services.IPlayListService;
 import br.com.interfaces.services.IRecomendacaoService;
 import br.com.interfaces.services.IReproducaoService;
-import br.com.interfaces.services.IUsuarioService;
 import br.com.model.Playlist;
 import br.com.repositories.UsuarioRepository;
 import java.util.ArrayList;
-import java.util.concurrent.TimeoutException;
 
 public class PlayListService implements IPlayListService {
     
     private IRecomendacaoService recomendacaoService;
     private IUsuarioRepository usuarioRepository;
-    private List<IUsuario> autorizadosParaCriarPlaylist;
     private static final Integer MAX_COLABORADORES = 5;
     
     public PlayListService(IRecomendacaoService recomendacaoService) {
-        autorizadosParaCriarPlaylist = new ArrayList<>();
         usuarioRepository = UsuarioRepository.getUsuarioRepository();
         this.recomendacaoService = recomendacaoService;
     }
@@ -108,8 +104,6 @@ public class PlayListService implements IPlayListService {
             return -2;
         }
         
-        // Verificar a importância de ArtistaService, nenhum lugar do documento
-        // fala isso. Por enquanto vamos passá-la como 'null'
         reproducaoService.reproduzirPlayList(playlist, usuario);
         return 0;
     }

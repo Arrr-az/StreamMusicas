@@ -58,12 +58,12 @@ public class Playlist implements IPlaylist {
     
     @Override
     public boolean isCompartilhavel() {
-        return isPublica;
+        return isCompartilhada;
     }
 
     @Override
     public void setCompartilhavel(boolean bln) {
-        isPublica = bln;
+        isCompartilhada = bln;
     }
 
     @Override

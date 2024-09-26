@@ -1,18 +1,20 @@
-
 import br.com.interfaces.model.IMusica;
 import br.com.interfaces.model.IPlaylist;
 import br.com.interfaces.model.IUsuario;
 import br.com.interfaces.repository.IMusicaRepository;
 import br.com.interfaces.repository.IUsuarioRepository;
-import org.ufes.gqs.recomendacaoservice.services.RecomendacaoService;
 import br.com.model.Usuario;
 import br.com.repositories.MusicaRepository;
 import br.com.repositories.UsuarioRepository;
 import br.com.services.PlayListService;
+
+import org.ufes.gqs.recomendacaoservice.services.RecomendacaoService;
+import br.com.musicas.reproducao.ReproducaoService;
+
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 /*
@@ -27,6 +29,7 @@ public class TestesIntegracao {
     private Optional<IPlaylist> pl;
     
     private RecomendacaoService recomendacaoService = new RecomendacaoService();
+    private ReproducaoService reproducaoService = new ReproducaoService();
     
     @BeforeEach
     public void setUp() throws Exception{
@@ -84,18 +87,15 @@ public class TestesIntegracao {
         assertTrue(resultado.isEmpty());
     }
 
-    /*
     @Test
     // Inicia a reprodução da playlist automaticamente.
     public void iniciarReproducaoPlayList(){
-        doNothing().when(mockReproducao).reproduzirPlayList(pl.get(), usuario);
-        
-        var retorno = playListService.iniciarReproducaoPlayList(pl.get(), usuario, mockReproducao);
+        var retorno = playListService.iniciarReproducaoPlayList(pl.get(), usuario, reproducaoService);
         
         assertEquals(0, retorno);
-        verify(mockReproducao, times(1)).reproduzirPlayList(pl.get(), usuario);
     }
     
+    /*
     @Test
     public void iniciarReproducaoPlayListFalha1(){
         IUsuario us = new Usuario("Meu nome", "email@email", Boolean.FALSE, Boolean.TRUE);
@@ -121,5 +121,5 @@ public class TestesIntegracao {
         assertEquals(-2, retorno);
         verify(mockReproducao, never()).reproduzirPlayList(playListVazia.get(), usuario);
     }
-    */
+*/
 }
