@@ -40,6 +40,11 @@
 	    <artifactId>ReproducaoService</artifactId>
 	    <version>c7abdd91e8</version>
 	</dependency>
+        <dependency>
+            <groupId>com.github.heflain-mendes</groupId>
+            <artifactId>StreamMusicas</artifactId>
+            <version>1.0.24</version>
+        </dependency>
     </dependencies>
 
     <build>
